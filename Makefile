@@ -2,7 +2,7 @@
 CC = gcc
 VALGRIND = valgrind --leak-check=full
 CFLAGS = -Wall -Wextra -Werror
-BUFFER_SIZE = 2
+BUFFER_SIZE = 42
 EXE = get_next_line.exe
 SRCS = $(wildcard *.c)
 OBJS = $(SRCS:.c=.o)

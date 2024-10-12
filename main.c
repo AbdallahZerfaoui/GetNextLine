@@ -10,6 +10,11 @@ int main(void)
 
     printf("BUFFER_SIZE: %d\n", BUFFER_SIZE);
     line = get_next_line(fd);
+    if (!line)
+    {
+        printf("NULL\n");
+        return (0);
+    }
     while (strcmp(line, "") != 0)
     {
         // printf("i: %d\n", i);
