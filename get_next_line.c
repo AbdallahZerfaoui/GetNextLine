@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 12:28:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/10/13 12:31:05 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/10/13 12:50:20 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,32 +56,37 @@ static ssize_t	read_and_append_remainder(int fd, char **remainder)
 
 static void	handle_EOF(char **line, char **remainder)
 {
-	int	remainder_len;
+	// int	remainder_len;
 
 	if (*remainder)
 	{
 		*line = ft_strdup(*remainder);
-		remainder_len = ft_strlen(*remainder);
-		while (remainder_len--)
-			(*remainder)[remainder_len] = '\0';
+		free(*remainder);
+		// remainder_len = ft_strlen(*remainder);
+		// while (remainder_len--)
+		// 	(*remainder)[remainder_len] = '\0';
 	}
 	else
-		*line = ft_strdup("");
+		*line = NULL;
 }
 
 char	*get_next_line(int fd)
 {
-	static char *remainder = NULL;
-	ssize_t bytes_read = 1;
-	char *new_line_ptr = NULL;
+	static char *remainder;
+	ssize_t bytes_read;
+	char *new_line_ptr;
 	char *line;
+
+	remainder = NULL;
+	bytes_read = 1;
+	new_line_ptr = NULL;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!remainder)
 	{
 		bytes_read = read_and_append_remainder(fd, &remainder);
-		if (bytes_read == 0)
+		if (bytes_read <= 0) // fix the invalid fd case in paco
 			return (NULL);
 	}
 	// Continue reading until a newline character is found or EOF is reached
