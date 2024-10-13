@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 12:28:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/10/12 19:10:08 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/10/13 12:31:05 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,16 @@ static ssize_t	read_and_append_remainder(int fd, char **remainder)
 static void	handle_EOF(char **line, char **remainder)
 {
 	int	remainder_len;
-	
-	*line = ft_strdup(*remainder);
-	if(*remainder && **remainder != '\0')
-		free(*remainder);
-	// ft_memset(*remainder, '\0', ft_strlen(*remainder));
-	remainder_len = ft_strlen(*remainder);
-	while (remainder_len--)
-		(*remainder)[remainder_len] = '\0';
+
+	if (*remainder)
+	{
+		*line = ft_strdup(*remainder);
+		remainder_len = ft_strlen(*remainder);
+		while (remainder_len--)
+			(*remainder)[remainder_len] = '\0';
+	}
+	else
+		*line = ft_strdup("");
 }
 
 char	*get_next_line(int fd)
@@ -74,6 +76,8 @@ char	*get_next_line(int fd)
 	char *new_line_ptr = NULL;
 	char *line;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	if (!remainder)
 	{
 		bytes_read = read_and_append_remainder(fd, &remainder);

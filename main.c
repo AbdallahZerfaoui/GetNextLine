@@ -5,7 +5,7 @@
 
 int main(void)
 {
-    int fd = open("test_files/test_file_1.txt", O_RDONLY);
+    int fd = open("test_files/test_file_1_short.txt", O_RDONLY);
     char *line;
 
     printf("BUFFER_SIZE: %d\n", BUFFER_SIZE);
