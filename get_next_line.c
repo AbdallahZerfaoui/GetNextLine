@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 12:28:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/10/14 13:48:13 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:09:44 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	handle_EOF(char **line, char **remainder)
 
 char	*get_next_line(int fd)
 {
-	static char *remainder = NULL;
+	static char *remainder;
 	ssize_t bytes_read;
 	char *new_line_ptr;
 	char *line;
