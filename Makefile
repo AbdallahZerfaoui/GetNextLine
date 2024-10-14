@@ -1,6 +1,6 @@
 # Define variables
 CC = gcc
-VALGRIND = valgrind --leak-check=full
+VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --gen-suppressions=all
 CFLAGS = -Wall -Wextra -Werror
 BUFFER_SIZE = 42
 EXE = get_next_line.exe

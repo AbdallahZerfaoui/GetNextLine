@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 12:28:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/10/13 12:50:20 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:48:13 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static ssize_t	read_and_append_remainder(int fd, char **remainder)
 			temp = ft_strjoin_gnl(*remainder, buffer);
 			free(*remainder);
 			*remainder = temp;
+			// free(temp);
 		}
 	}
 	return (bytes_read);
@@ -61,25 +62,28 @@ static void	handle_EOF(char **line, char **remainder)
 	if (*remainder)
 	{
 		*line = ft_strdup(*remainder);
-		free(*remainder);
+		*remainder = NULL;
+		// free(*remainder);
 		// remainder_len = ft_strlen(*remainder);
 		// while (remainder_len--)
 		// 	(*remainder)[remainder_len] = '\0';
 	}
 	else
 		*line = NULL;
+
 }
 
 char	*get_next_line(int fd)
 {
-	static char *remainder;
+	static char *remainder = NULL;
 	ssize_t bytes_read;
 	char *new_line_ptr;
 	char *line;
 
-	remainder = NULL;
-	bytes_read = 1;
-	new_line_ptr = NULL;
+	// remainder = NULL;
+	// bytes_read = 1;
+	// new_line_ptr = NULL;
+	line = NULL;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -89,13 +93,24 @@ char	*get_next_line(int fd)
 		if (bytes_read <= 0) // fix the invalid fd case in paco
 			return (NULL);
 	}
+	new_line_ptr = ft_strchr(remainder, '\n');
 	// Continue reading until a newline character is found or EOF is reached
-	while (!(new_line_ptr = ft_strchr(remainder, '\n')) && bytes_read > 0)
+	if (new_line_ptr)
 	{
-		bytes_read = read_and_append_remainder(fd, &remainder);
-		if (bytes_read == 0)
-			return (handle_EOF(&line, &remainder), line);
+		// bytes_read = read_and_append_remainder(fd, &remainder);
+		// if (bytes_read == 0)
+		// 	return (handle_EOF(&line, &remainder), line);
+		line = extract_line_and_update_remainder(new_line_ptr, &remainder);
+		return (line);
 	}
-	line = extract_line_and_update_remainder(new_line_ptr, &remainder);
-	return (line);
+	bytes_read = read_and_append_remainder(fd, &remainder);
+	if (bytes_read <= 0)
+	{
+		if (remainder && *remainder)
+			return (handle_EOF(&line, &remainder), line);
+		return (NULL);
+	}
+	// line = extract_line_and_update_remainder(new_line_ptr, &remainder);
+	// return (line);
+	return (get_next_line(fd));
 }
