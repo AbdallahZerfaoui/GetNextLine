@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 12:47:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/10/14 13:46:47 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:01:05 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 int	main(void)
 {
-	// int fd = open("test_files/one_line_wo_nl.txt", O_RDONLY);
-	int fd = open("test_files/test_file_1.txt", O_RDONLY);
+	int fd = open("test_files/only_nl.txt", O_RDONLY);
+	// int fd = open("test_files/test_file_1.txt", O_RDONLY);
 	char *line;
 
 	printf("BUFFER_SIZE: %d\n", BUFFER_SIZE);
@@ -36,4 +36,5 @@ int	main(void)
 		// line = get_next_line(fd);
 	}
 	close(fd);
+	// system("leaks get_next_line.exe");
 }

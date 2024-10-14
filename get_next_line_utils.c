@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 12:27:20 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/10/12 19:10:32 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:05:41 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,6 @@ size_t	ft_strlen(const char *s)
 	}
 	return (size);
 }
-
-// int	ft_strcmp(const char *s1, const char *s2)
-// {
-// 	while (*s1 && *s2 && *s1 == *s2)
-// 	{
-// 		s1++;
-// 		s2++;
-// 	}
-// 	return (*s1 - *s2);
-// }
 
 char	*ft_strdup(const char *s)
 {
@@ -59,40 +49,6 @@ char	*ft_strdup(const char *s)
 	ptr = ft_strncpy(ptr, s, size);
 	return (ptr);
 }
-
-// size_t	ft_strlcat_gnl(char *dst, const char *src, size_t dst_size)
-// {
-// 	size_t	i;
-// 	size_t	dst_len;
-// 	size_t	src_len;
-
-// 	dst_len = 0;
-// 	while (dst[dst_len] && dst_len < dst_size)
-// 		dst_len++;
-// 	src_len = ft_strlen(src);
-// 	i = 0;
-// 	while (src[i] && dst_len + i + 1 < dst_size)
-// 	{
-// 		dst[dst_len + i] = src[i];
-// 		i++;
-// 	}
-// 	if (dst_len < dst_size)
-// 		dst[dst_len + i] = '\0';
-// 	return (dst_len + src_len);
-// }
-
-// void	*ft_memset(void *s, int c, size_t n)  
-// {
-// 	unsigned char	*ptr;
-
-// 	ptr = s;
-// 	while (n--)
-// 	{
-// 		*ptr = c;
-// 		ptr++;
-// 	}
-// 	return (s);
-// }
 
 char	*ft_strchr(const char *str, int search_chr)
 {
@@ -126,24 +82,6 @@ char	*ft_strncpy(char *destination, const char *source, size_t n)
 	}
 	return (destination);
 }
-
-// size_t	ft_strlcpy(char *dst, const char *src, size_t dst_size)
-// {
-// 	size_t	i;
-// 	size_t	src_len;
-
-// 	src_len = ft_strlen(src);
-// 	i = 0;
-// 	if (dst_size == 0)
-// 		return (src_len);
-// 	while (src[i] && i < dst_size - 1)
-// 	{
-// 		dst[i] = src[i];
-// 		i++;
-// 	}
-// 	dst[i] = '\0';
-// 	return (src_len);
-// }
 
 char	*ft_strjoin_gnl(char const *s1, char const *s2)
 {
