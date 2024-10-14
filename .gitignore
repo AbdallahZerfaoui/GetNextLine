@@ -1,0 +1,9 @@
+#Basic
+.vscode
+*.dSYM
+*.o
+*.exe
+*.out
+
+#Specific for this code
+main
