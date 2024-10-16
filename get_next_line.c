@@ -6,26 +6,25 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 12:28:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/10/14 20:39:05 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:26:52 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-
-static char	*extract_line_and_update_remainder(char *new_line_ptr, char **remainder)
+static char	*extract_line_and_update_remainder(char *new_line_ptr,
+		char **remainder)
 {
 	size_t	line_len;
-	char	*new_remainder = NULL;
+	char	*new_remainder;
 	char	*line;
 
+	new_remainder = NULL;
 	line_len = new_line_ptr - *remainder + 1;
 	line = (char *)ft_calloc(line_len + 1, sizeof(char));
 	if (!line)
 		return (NULL);
-	line = ft_strncpy(line, *remainder, line_len); // consider using ft_strlcpy
-	// ft_strlcpy(line, *remainder, line_len); // consider using ft_strlcpy
-	// line[line_len] = '\0';
+	line = ft_strncpy(line, *remainder, line_len);
 	if (*(new_line_ptr + 1) != '\0')
 	{
 		new_remainder = ft_strdup(new_line_ptr + 1);
@@ -34,8 +33,6 @@ static char	*extract_line_and_update_remainder(char *new_line_ptr, char **remain
 	}
 	free(*remainder);
 	*remainder = new_remainder;
-	// if (!*new_remainder)
-	// 	free(new_remainder);
 	return (line);
 }
 
@@ -45,9 +42,11 @@ static ssize_t	read_and_append_remainder(int fd, char **remainder)
 	ssize_t	bytes_read;
 	char	*new_remainder;
 
-	bytes_read = 1; //do i need it??
+	bytes_read = 1; // do i need it??
 	new_remainder = NULL;
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	// if (bytes_read < 0)
+	// 	return (free(*remainder), *remainder = NULL, -1);
 	if (bytes_read > 0)
 	{
 		buffer[bytes_read] = '\0';
@@ -57,11 +56,7 @@ static ssize_t	read_and_append_remainder(int fd, char **remainder)
 		{
 			new_remainder = ft_strjoin_gnl(*remainder, buffer);
 			if (!new_remainder)
-			{
-				free(*remainder);
-				*remainder = NULL;
-				return (-1);
-			}
+				return (free(*remainder), *remainder = NULL, -1);
 			else
 			{
 				free(*remainder);
@@ -69,15 +64,11 @@ static ssize_t	read_and_append_remainder(int fd, char **remainder)
 			}
 		}
 	}
-
-// dprintf(2,">>>%p<<<", new_remainder);
 	return (bytes_read);
 }
 
-static void	handle_EOF(char **line, char **remainder)
+static void	handle_eof(char **line, char **remainder)
 {
-	// int	remainder_len;
-
 	if (*remainder)
 	{
 		*line = ft_strdup(*remainder);
@@ -85,10 +76,6 @@ static void	handle_EOF(char **line, char **remainder)
 			return ;
 		free(*remainder);
 		*remainder = NULL;
-		// free(*remainder);
-		// remainder_len = ft_strlen(*remainder);
-		// while (remainder_len--)
-		// 	(*remainder)[remainder_len] = '\0';
 	}
 	else
 		*line = NULL;
@@ -96,31 +83,22 @@ static void	handle_EOF(char **line, char **remainder)
 
 char	*get_next_line(int fd)
 {
-	static char *remainder = NULL;
-	ssize_t bytes_read = 0;
-	char *new_line_ptr;
-	char *line;
+	static char	*remainder = NULL;
+	ssize_t		bytes_read;
+	char		*new_line_ptr;
+	char		*line;
 
-	line = NULL;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0) // the read condition add errors
 		return (NULL);
 	if (!remainder)
 	{
 		bytes_read = read_and_append_remainder(fd, &remainder);
 		if (bytes_read <= 0) // fix the invalid fd case in paco
-		{
-			free(remainder);
-			remainder = NULL;
-			return (NULL);
-		}
+			return (free(remainder), remainder = NULL, NULL);
 	}
 	new_line_ptr = ft_strchr(remainder, '\n');
-	// Continue reading until a newline character is found or EOF is reached
-	
 	if (new_line_ptr) // a revoir
 	{
-		// free(line);
 		line = extract_line_and_update_remainder(new_line_ptr, &remainder);
 		return (line);
 	}
@@ -128,18 +106,9 @@ char	*get_next_line(int fd)
 	if (bytes_read == 0)
 	{
 		if (remainder && *remainder)
-			return (handle_EOF(&line, &remainder), line);
-		// return (NULL);
+			return (handle_eof(&line, &remainder), line);
 	}
-	else if (bytes_read < 0)
-	{
-		free(remainder);
-		remainder = NULL;
-		return (NULL);
-	}
-
-	// line = get_next_line(fd);
-	// return (line);
-	// free(line);
+	// else if (bytes_read < 0)
+	// 	return (free(remainder), remainder = NULL, NULL);
 	return (get_next_line(fd));
 }
