@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 12:47:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/10/16 13:50:04 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:26:36 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,19 @@
 
 int	main(void)
 {
-	int fd = open("test_files/test_file_1_short.txt", O_RDONLY);
-	// int fd = open("test_files/test_file_1.txt", O_RDONLY);
-	char *line;
+	int		fd;
+	char	*line;
 
+	line = NULL;
+	// fd = open("test_files/read_error.txt", O_RDONLY);
+	fd = open("test_files/1char.txt", O_RDONLY);
 	printf("BUFFER_SIZE: %d\n", BUFFER_SIZE);
-	// line = get_next_line(fd);
-	// if (!line)
-	// {
-	// 	printf("NULL\n");
-	// 	return (0);
-	// }
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		printf("%s", "|");
 		printf("%s", line);
 		free(line);
 		line = NULL;
-		// line = get_next_line(fd);
 	}
 	close(fd);
-	// system("leaks get_next_line.exe");
 }

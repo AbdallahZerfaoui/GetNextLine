@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 12:27:20 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/10/16 13:01:04 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:54:14 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	*ft_strdup(const char *s)
 	while (s[size])
 		size++;
 	ptr = (char *)ft_calloc(size + 1, sizeof(char));
+	// fprintf(file, "ptr from strdup: %p\n", ptr);
 	if (!ptr)
 		return (NULL);
 	ptr = ft_strncpy(ptr, s, size);
@@ -73,21 +74,6 @@ char	*ft_strncpy(char *destination, const char *source, size_t n)
 		i++;
 	}
 	return (destination);
-}
-
-char	*ft_strjoin_gnl(char const *s1, char const *s2)
-{
-	char	*str_result;
-
-	if (!s1 && !s2)
-		return (NULL);
-	str_result = (char *)ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1,
-			sizeof(char));
-	if (!str_result)
-		return (NULL);
-	ft_strncpy(str_result, s1, ft_strlen(s1));
-	ft_strncpy(str_result + ft_strlen(s1), s2, ft_strlen(s2));
-	return (str_result);
 }
 
 void	*ft_calloc(size_t nitems, size_t size)
