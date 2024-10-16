@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 12:47:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/10/14 20:01:05 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:50:04 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 int	main(void)
 {
-	int fd = open("test_files/only_nl.txt", O_RDONLY);
+	int fd = open("test_files/test_file_1_short.txt", O_RDONLY);
 	// int fd = open("test_files/test_file_1.txt", O_RDONLY);
 	char *line;
 
@@ -33,6 +33,7 @@ int	main(void)
 		printf("%s", "|");
 		printf("%s", line);
 		free(line);
+		line = NULL;
 		// line = get_next_line(fd);
 	}
 	close(fd);
