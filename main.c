@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 12:47:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/10/16 19:26:36 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:19:52 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,38 @@
 #include <stdio.h>
 #include <string.h>
 
-int	main(void)
-{
-	int		fd;
-	char	*line;
+// void int_to_ascii(int c)
+// {
+//     // Convert integer to string (ASCII representation)
+//     dprintf(2, "%i\n", (int)c);
 
-	line = NULL;
-	// fd = open("test_files/read_error.txt", O_RDONLY);
-	fd = open("test_files/1char.txt", O_RDONLY);
-	printf("BUFFER_SIZE: %d\n", BUFFER_SIZE);
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("%s", "|");
-		printf("%s", line);
-		free(line);
-		line = NULL;
-	}
-	close(fd);
-}
+//     // return ascii_str;
+// }
+
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*line;
+
+// 	// printf("%s", "HELLO");
+	
+// 	line = NULL;
+// 	fd = open("test_files/test_file_1.txt", O_RDONLY);
+// 	// fd = open("test_files/only_nl.txt", O_RDONLY);
+// 	printf("BUFFER_SIZE: %d\n", BUFFER_SIZE);
+// 	line = get_next_line(fd);
+// 	while (line != NULL)
+// 	{
+// 		printf("%s", "|");
+// 		printf("%s", line);
+// 		// do
+// 		// {
+// 		// 	int_to_ascii(*line);
+// 		// } while (line && *line && line++);
+// 		free(line);
+// 		line = NULL;
+// 	}
+// 	free(line);
+// 	line = NULL;
+// 	close(fd);
+// }

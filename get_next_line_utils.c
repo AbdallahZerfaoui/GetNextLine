@@ -6,11 +6,12 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 12:27:20 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/10/16 19:54:14 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/10/19 17:01:14 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
 
 size_t	ft_strlen(const char *s)
 {
@@ -32,9 +33,10 @@ char	*ft_strdup(const char *s)
 	char	*ptr;
 	size_t	size;
 
-	size = 0;
-	while (s[size])
-		size++;
+	size = ft_strlen(s);
+	// while (s[size])
+	// 	size++;
+	// ptr = (char *)ft_calloc(size + 1, sizeof(char));
 	ptr = (char *)ft_calloc(size + 1, sizeof(char));
 	// fprintf(file, "ptr from strdup: %p\n", ptr);
 	if (!ptr)
@@ -45,7 +47,7 @@ char	*ft_strdup(const char *s)
 
 char	*ft_strchr(const char *str, int search_chr)
 {
-	if (!str)
+	if (!str || !*str)
 		return (NULL);
 	while (*str)
 	{
@@ -76,16 +78,56 @@ char	*ft_strncpy(char *destination, const char *source, size_t n)
 	return (destination);
 }
 
+// void	*ft_calloc_3(size_t nitems, size_t size)
+// {
+// 	void	*ptr;
+// 	size_t	total_size;
+
+// 	total_size = nitems * size;
+// 	// if (nitems != 0 && (total_size / nitems != size))
+// 	// 	return (NULL);
+// 	ptr  = malloc(total_size);
+// 	if (ptr == NULL)
+// 		return (NULL);
+// 	while (total_size--)
+// 		((unsigned char *)ptr)[total_size] = 0;
+// 	return ((void *)ptr);
+// }
+
+// void	*ft_calloc_1(size_t nitems, size_t size)
+// {
+// 	void	*ptr;
+// 	size_t	total_size;
+
+// 	total_size = nitems * size;
+// 	// if (nitems != 0 && (total_size / nitems != size))
+// 	// 	return (NULL);
+// 	ptr  = malloc(total_size);
+// 	if (ptr == NULL)
+// 		return (NULL);
+// 	while (total_size--)
+// 		((unsigned char *)ptr)[total_size] = 0;
+// 	return ((void *)ptr);
+// }
+
+// void *malloc_test(size_t size)
+// {
+// 	(void)size;
+//     return (NULL);  // Simulate malloc failure
+// }
+
 void	*ft_calloc(size_t nitems, size_t size)
 {
 	void	*ptr;
 	size_t	total_size;
 
 	total_size = nitems * size;
-	ptr = malloc(total_size);
+	// if (nitems != 0 && (total_size / nitems != size))
+	// 	return (NULL);
+	ptr  = malloc(total_size);
 	if (ptr == NULL)
 		return (NULL);
 	while (total_size--)
 		((unsigned char *)ptr)[total_size] = 0;
-	return (ptr);
+	return ((void *)ptr);
 }
