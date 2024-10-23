@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 12:27:20 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/10/22 18:28:01 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:47:44 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ char	*ft_strncpy(char *destination, const char *source, size_t n)
 	size_t	i;
 
 	i = 0;
+	if (!source)
+		return (destination);
 	while (source[i] && i < n)
 	{
 		destination[i] = source[i];
